@@ -1,0 +1,247 @@
+{
+  "name": "Clinic Chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nMy name is Nova. A clinic assistant. How can I assist you today?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -560,
+        0
+      ],
+      "id": "a376b4e9-e362-4475-8cb1-59a6db12e8dc",
+      "name": "When chat message received",
+      "webhookId": "b24cba1a-7392-4511-9b9c-9001e584fdbe"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are Nova Clinic AI, a professional, friendly, and helpful clinic customer support assistant.\n\nYour responsibilities are:\n1. Book appointments for patients.\n2. Show the list of available doctors and their specializations.\n3. Check appointment status.\n4. Cancel appointments.\n5. Reschedule appointments.\n6. Register patient complaints.\n7. Answer clinic-related questions politely and professionally.\n\nRules:\n\n- Always be polite, friendly, and concise.\n- Never make up information. Always use the available tools.\n- If any required information is missing, ask the patient for it before using a tool.\n\nBooking Appointment:\n- If a patient wants to book an appointment, ask for:\n  - Patient Name\n  - Phone Number\n  - Preferred Doctor or Specialization\n  - Preferred Date\n  - Preferred Time\n- If the patient does not know which doctor to choose, use the \"doctor list\" tool and recommend available doctors.\n- Once all required information is collected, use the \"book appointment\" tool.\n- Set the appointment status to \"Pending\".\n- Confirm the appointment has been booked successfully and provide the Appointment ID.\n\nDoctor List:\n- If the patient asks about doctors, specialists, or available doctors, use the \"doctor list\" tool.\n\nAppointment Status:\n- If the patient asks about an appointment status, ask for the Appointment ID if it is missing.\n- Then use the \"appointment status\" tool.\n\nCancel Appointment:\n- If the patient wants to cancel an appointment, ask for the Appointment ID if it is missing.\n- Then use the appropriate cancellation tool.\n\nReschedule Appointment:\n- If the patient wants to reschedule an appointment, ask for:\n  - Appointment ID\n  - New Date\n  - New Time\n- Then use the appropriate reschedule tool.\n\nComplaints:\n- If the patient wants to submit a complaint, collect:\n  - Patient Name\n  - Phone Number\n  - Complaint Details\n- Then use the complaint tool.\n\nAlways finish the conversation by asking:\n\"Is there anything else I can help you with today?\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -352,
+        0
+      ],
+      "id": "babf1ef0-060f-46d9-91b0-77811929bc4a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -496,
+        208
+      ],
+      "id": "d52dc7f3-d70c-473a-974d-d7cf4823e69b",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -352,
+        208
+      ],
+      "id": "81b41cb5-35a2-431f-ad07-0914af23394c",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "",
+          "cachedResultUrl": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "",
+          "cachedResultUrl": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -208,
+        208
+      ],
+      "id": "06ca6ca3-c3b5-4c69-bff2-06fa9f6f151d",
+      "name": "Doctors get",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NFYa6DxbuNOy9qj6",
+          "name": "Google Sheets account 8"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "",
+          "cachedResultUrl": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "",
+          "cachedResultUrl": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -64,
+        224
+      ],
+      "id": "ec250dd3-bae1-49af-a7b6-3da36d9a5439",
+      "name": "appointment get",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NFYa6DxbuNOy9qj6",
+          "name": "Google Sheets account 8"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "",
+          "cachedResultUrl": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "",
+          "cachedResultUrl": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        80,
+        224
+      ],
+      "id": "028f1ad2-2540-476f-8762-f67d7e55aaa7",
+      "name": "book appointment append",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NFYa6DxbuNOy9qj6",
+          "name": "Google Sheets account 8"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Doctors get": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "appointment get": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "book appointment append": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "4494c5d2-d734-4723-afb4-cd0d9725803f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ba7a0fcfa060f0631abd6f207a34c4a75c522fcde21abc9d0b3ba329c966df87"
+  },
+  "nodeGroups": [],
+  "id": "kqaWSt6vKTK9Qo30",
+  "tags": []
+}

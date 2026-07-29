@@ -1,7 +1,9 @@
-# 🏥 Nova Clinic AI - n8n Workflow
 <p align="center">
   <img src="assets/banner.png" alt="Nova Clinic AI Banner" width="100%">
 </p>
+
+# 🏥 Nova Clinic AI - n8n Workflow
+
 
 An AI-powered clinic customer support assistant built with **n8n**, **Google Gemini**, and **Google Sheets**.
 

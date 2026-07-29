@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.png" alt="Nova Clinic AI Banner" width="100%">
+  <img src="Nova%20clinic%20chatbot%201.png" alt="Nova Clinic AI Banner" width="100%">
 </p>
 
 # 🏥 Nova Clinic AI - n8n Workflow

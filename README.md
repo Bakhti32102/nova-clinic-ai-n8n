@@ -1,7 +1,11 @@
 <p align="center">
   <img src="Nova%20clinic%20chatbot%201.png" alt="Nova Clinic AI Banner" width="100%">
 </p>
+## 📷 Workflow Preview
 
+<p align="center">
+  <img src="screenshots/workflow.png" alt="Nova Clinic AI Workflow" width="100%">
+</p>
 # 🏥 Nova Clinic AI - n8n Workflow
 
 An AI-powered clinic customer support assistant built with **n8n**, **Google Gemini**, and **Google Sheets**.
